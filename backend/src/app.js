@@ -9,3 +9,24 @@ app.use(express.json())
 app.use("/api/todos",todoRoutes)
 
 module.exports=app;
+
+
+app.use(cookieParser());
+
+
+
+app.get("/set-cookie" ,(req,res)=>{
+    res.cookie("name","user-1");
+    res.send("Cookie set");
+});
+
+
+app.get("./get-cookie",(req,res)=>{
+    res.json(req.cookies);
+});
+
+app.use(session({
+    secret : "mysecretkey",
+    resave: false,
+    saveUninitialized:true,
+}))
