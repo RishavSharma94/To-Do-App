@@ -1,16 +1,23 @@
-const express=require("express");
+const express = require("express");
+const router = express.Router();
+const auth = require("../middleware/auth.middleware");
 
-const router=express.Router();
+const {
+    getTodos,
+    createTodo,
+    updateTodos,
+    deleteTodo
+} = require("../controllers/todo.controller");
 
-const {getTodos,createTodo,updateTodos,deleteTodo}=require("../controllers/todo.controller")
+const { validateTodo } = require("../middleware/validateTodo.middleware");
 
-router.get("/",getTodos)
+// routes
+router.get("/", getTodos);
 
-router.post("/",createTodo)
+router.post("/", validateTodo, createTodo); // ✅ FIX
 
-router.put("/:id",updateTodos)
+router.put("/:id", validateTodo, updateTodos);
 
-router.delete("/:id",deleteTodo)
+router.delete("/:id", deleteTodo);
 
-
-module.exports=router;
+module.exports = router;
